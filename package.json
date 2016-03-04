@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/peymanmortazavi/StarHub#readme",
   "dependencies": {
+    "got": "^6.2.0",
     "octonode": "^0.7.4"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
