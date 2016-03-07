@@ -1,0 +1,14 @@
+Retrieving search results, repositories having more than 5 stars:
+
+https://api.github.com/search/repositories?q=stars:>=5
+
+Default number of repositories displayed per page is 30.
+If you want to set the number of repositories to be displayed on a page then you do something like this:
+
+https://api.github.com/search/repositories?q=stars:>=5&page=3&per_page=100
+
+At the max, you can only display 100 repositories per a page. => only 10 pages can be retrieved as the limit is 1000 results per an API request.
+
+If you want to search for repositories created on a date:
+
+https://api.github.com/search/repositories?q=created:=2016-01-01&stars:>=5&page=1&per_page=100
