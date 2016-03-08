@@ -17,8 +17,11 @@
   },
   "homepage": "https://github.com/peymanmortazavi/StarHub#readme",
   "dependencies": {
+    "asyncawait": "^1.0.3",
     "got": "^6.2.0",
-    "octonode": "^0.7.4"
+    "moment": "^2.12.0",
+    "octonode": "^0.7.4",
+    "sleep": "^3.0.1"
   },
   "devDependencies": {}
 }
