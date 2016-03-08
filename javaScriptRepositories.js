@@ -6,7 +6,7 @@ var await = require('asyncawait/await');
 
 // Change this to be the total amount of pages you want to loop over.
 var totalPageLength = 10;
-var token = '098b291e97c230306829936401a38cdfd01e7ab6';
+var token = process.env.GTOKEN;
 
 var startDate = moment("01012014", "MMDDYYYY");
 var endDate = moment("01092014", "MMDDYYYY");
