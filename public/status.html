@@ -5,14 +5,30 @@
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     </head>
     <body style="margin: 0px;">
-        <div style="text-align: center; background-color: black; color: white; font-family: Avenir-Light"><a id="dlCount" style="color: Aquamarine">Downloaded Records: 0</a> | <a id="errors" style="color: Tomato">Errors: 0</a> | <a id="days" style="color: yellow">0/0 Days</a> | <a id="progress" style="color: lawngreen">Progress: 0%</a></div>
-        <div id="log">
+        <div style="text-align: center; background-color: black; color: white; font-family: Avenir-Light"><a id="dlCount" style="color: Aquamarine">Downloaded Records: 0</a> | <a id="errors" style="color: Tomato">Errors: 0</a> | <a id="days" style="color: yellow">0/0 Days</a> | <a id="progress" style="color: yellowgreen">Progress: 0%</a></div>
+        <div id="log" style="font-family: Avenir-Light; margin-left: 15px">
         </div>
     </body>
     <script>
         var socket = io();
         socket.on('log', function(item) {
-            console.log(item);
+            var color = "black";
+            if (item.type == 'error') {
+                color = "red"
+            } else if (item.type == 'info') {
+                color = "yellowgreen"
+            } else if (item.type == "sleep") {
+                color = "gold"
+            }
+
+            var parts = item.text.split('-');
+            var header = item.text;
+            var msg = ""
+            if(parts.length >= 2) {
+                header = parts[0];
+                msg = parts[1];
+            }
+            $('#log').append('<p><a style="color: ' + color + '">' + header + '</a>' + msg + '</p>');
         });
         socket.on('stats', function(stat) {
             $('#dlCount').html('Downloaded Records: ' + stat.totalRecords);

@@ -60,7 +60,7 @@ var startJob = async(function (db, progressCallback) {
       } catch (error) {
         console.log(error);
         console.log(error.response.body);
-        progressCallback({type: 'error', text: '[ERROR] ' + error.response.body});
+        progressCallback({type: 'error', text: '[ERROR] - ' + error.response.body});
       }
     }
 
