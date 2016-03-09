@@ -18,11 +18,14 @@
   "homepage": "https://github.com/peymanmortazavi/StarHub#readme",
   "dependencies": {
     "asyncawait": "^1.0.3",
+    "express": "^4.13.4",
     "got": "^6.2.0",
+    "http": "0.0.0",
     "moment": "^2.12.0",
     "mongodb": "^2.1.7",
     "octonode": "^0.7.4",
-    "sleep": "^3.0.1"
+    "sleep": "^3.0.1",
+    "socket.io": "^1.4.5"
   },
   "devDependencies": {}
 }

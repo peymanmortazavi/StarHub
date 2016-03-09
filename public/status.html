@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>GitHub Data Collection - Status</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    </head>
+    <body style="margin: 0px;">
+        <div style="text-align: center; background-color: black; color: white; font-family: Avenir-Light"><a id="dlCount" style="color: Aquamarine">Downloaded Records: 0</a> | <a id="errors" style="color: Tomato">Errors: 0</a> | <a id="days" style="color: yellow">0/0 Days</a> | <a id="progress" style="color: lawngreen">Progress: 0%</a></div>
+        <div id="log">
+        </div>
+    </body>
+    <script>
+        var socket = io();
+        socket.on('log', function(item) {
+            console.log(item);
+        });
+        socket.on('stats', function(stat) {
+            $('#dlCount').html('Downloaded Records: ' + stat.totalRecords);
+            $('#errors').html('Errors: ' + stat.totalErrors);
+            $('#days').html((stat.totalDays-stat.daysLeft+1) + '/' + stat.totalDays + ' Days');
+            var percent = ((stat.totalDays-stat.daysLeft)/(stat.totalDays))*100;
+            $('#progress').html('Progress: ' + percent + '%');
+        });
+    </script>
+</html>
