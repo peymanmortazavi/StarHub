@@ -13,7 +13,7 @@ function calculateDaysLeft (date1, date2) {
 }
 
 var startDate = moment("01012014", "MMDDYYYY");
-var endDate = moment("01092014", "MMDDYYYY");
+var endDate = moment("01012016", "MMDDYYYY");
 var currentDate = startDate;
 var totalDays = calculateDaysLeft(endDate, startDate);
 

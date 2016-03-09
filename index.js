@@ -19,7 +19,7 @@ function handleProgress (info) {
     io.emit('stats', currentStat);
 }
 
-var url = 'mongodb://localhost:27017/git-test';
+var url = 'mongodb://localhost:27017/github';
 MongoClient.connect(url, function(err, db) {
     if (err) {
         console.error(err);
