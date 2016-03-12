@@ -1,6 +1,7 @@
 'use strict';
 var linkArray = require('./link-array.js');
 var imageArray = require('./image-array.js');
+var frequency = require('./frequency.js');
 
 var source = `# to-type
 
@@ -184,11 +185,14 @@ If you like this, star it. If you want to follow me, follow me. `;
 var myLinkArray = linkArray(source);
 console.log('link-array.js output: ' + myLinkArray);
 if (myLinkArray.length > 0) {
-	console.log('link-array length: ' + myLinkArray.length);
+	console.log('link-array length: ' + myLinkArray.length + '\n');
 }
 
 var myImageArray = imageArray(source);
 console.log('image-array.js output: ' + myImageArray);
 if (myImageArray.length > 0) {
-	console.log('image-array length: ' + myImageArray.length);
+	console.log('image-array length: ' + myImageArray.length + '\n');
 }
+
+var wordFreq = frequency(source);
+console.log('frequency: ' + JSON.stringify(wordFreq) + '\n');
