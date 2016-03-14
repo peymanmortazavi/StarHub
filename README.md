@@ -16,6 +16,7 @@ the actual content is base64.
     - [x] array of links
     - [x] number of links
   - [x] Word count (frequency): https://tonicdev.com/56c24183e3023b0d005535b1/56e1031073f4dc1100edbd3a
+  - [x] Section Count [sectionCount.js](sectionCount.js)
 
   * [Stretch] is there a code sample? How many bytes of code samples are there?
   * [Stretch] Badge count (extension of Links finding above)
@@ -247,4 +248,6 @@ frequency: [{"word":"travis","count":1},
 {"word":"com","count":1},
 {"word":"star","count":1},
 {"word":"want","count":1}]
+
+count: { section1: 2, section2: 6, section3: 1, section4: 0, section5: 2 }
 ```
