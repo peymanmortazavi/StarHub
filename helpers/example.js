@@ -201,4 +201,4 @@ console.log('frequency: ' + JSON.stringify(wordFreq) + '\n');
 
 var obj_str = sectionCount(source);
 var secCount = util.inspect(obj_str);
-console.log('Count ' +secCount);
+console.log('count: ' + secCount+ '\n');
