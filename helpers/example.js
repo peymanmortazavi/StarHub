@@ -2,6 +2,8 @@
 var linkArray = require('./link-array.js');
 var imageArray = require('./image-array.js');
 var frequency = require('./frequency.js');
+var sectionCount = require('./sectionCount.js');
+var util = require('util');
 
 var source = `# to-type
 
@@ -196,3 +198,7 @@ if (myImageArray.length > 0) {
 
 var wordFreq = frequency(source);
 console.log('frequency: ' + JSON.stringify(wordFreq) + '\n');
+
+var obj_str = sectionCount(source);
+var secCount = util.inspect(obj_str);
+console.log('Count ' +secCount);
