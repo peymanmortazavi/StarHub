@@ -249,5 +249,5 @@ frequency: [{"word":"travis","count":1},
 {"word":"star","count":1},
 {"word":"want","count":1}]
 
-count: { section1: 2, section2: 6, section3: 1, section4: 0, section5: 2 }
+count: { '##': 6, '###': 1, '####': 0, '#####': 2 }
 ```
