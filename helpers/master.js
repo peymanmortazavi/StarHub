@@ -1,7 +1,9 @@
+'use strict';
 const clientId = process.env.GH_TOKEN;
 const github = require('octonode');
 const inf = require('inf');
 const base64 = require('js-base64').Base64;
+const arrify = require('arrify');
 
 const fileExtension = require('file-extension');
 const linkArray = require('./link-array.js');
@@ -31,17 +33,26 @@ module.exports = function(url, cb) {
 
   client.get(`/repos/${owner}/${repo}/readme`, {}, function (err, status, body, headers) {
     const decoded = base64.decode(body.content);
-    console.log(inf(decoded));
+    // console.log(inf(decoded));
     body.decodedContent = decoded;
     // delete body.content;
-    console.log(inf(body.decodedContent));
+    // console.log(inf(body.decodedContent));
+    let myExtension = fileExtension(body.name).trim();
+    let markdownReg = /markdown|mdown|mkdn|mkd|md/gi;
+    if (markdownReg.test(myExtension)) {
+      myExtension = 'markdown';
+    }
 
     body.helpers = {
-      fileExtension: fileExtension(body.name),
+      fileExtension: myExtension,
       linkArray: linkArray(decoded),
-      wordFrequency: frequency(decoded),
+      // wordFrequency: frequency(decoded),
       sectionCount: {
-        h1: decoded.match(regs.markdownHeader(1, 'gm'))
+        h1: arrify(decoded.match(regs.markdownHeader(1, 'gm'))),
+        h2: arrify(decoded.match(regs.markdownHeader(2, 'gm'))),
+        h3: arrify(decoded.match(regs.markdownHeader(3, 'gm'))),
+        h4: arrify(decoded.match(regs.markdownHeader(4, 'gm'))),
+        h5: arrify(decoded.match(regs.markdownHeader(5), 'gm'))
       }
 
     };
