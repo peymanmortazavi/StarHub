@@ -10,10 +10,10 @@ npm install
 The Github returned content is base64 decode it first.
 
   * Number of sections
-  - [ ] readme file type (markdown, txt, etc)
+  - [x] readme file type (markdown, txt, etc)
 
   - [x] Length (you can get it from Github API: /api/ response.size)
-  - [x] Number of images used [image-array.js](image-array.js)
+  - [x] Not currently functioning Number of images used [image-array.js](image-array.js)
   - [x] Links [link-array.js](link-array.js)
     - [x] array of links
     - [x] number of links

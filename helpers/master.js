@@ -39,20 +39,26 @@ module.exports = function(url, cb) {
     // console.log(inf(body.decodedContent));
     let myExtension = fileExtension(body.name).trim();
     let markdownReg = /markdown|mdown|mkdn|mkd|md/gi;
-    if (markdownReg.test(myExtension)) {
-      myExtension = 'markdown';
-    }
+    const isMarkdown = markdownReg.test(myExtension);
 
+    const h1 = arrify(decoded.match(regs.markdownHeader(1, 'gm')));
+    const h2 = arrify(decoded.match(regs.markdownHeader(2, 'gm')));
+    const h3 = arrify(decoded.match(regs.markdownHeader(3, 'gm')));
+    const h4 = arrify(decoded.match(regs.markdownHeader(4, 'gm')));
+    const h5 = arrify(decoded.match(regs.markdownHeader(5), 'gm'));
+
+    let headerSum = h1.length + h2.length + h3.length + h4.length + h5.length;
     body.helpers = {
-      fileExtension: myExtension,
+      readmeIsMarkdown: isMarkdown,
       linkArray: linkArray(decoded),
-      // wordFrequency: frequency(decoded),
+      wordFrequency: frequency(decoded),
       sectionCount: {
-        h1: arrify(decoded.match(regs.markdownHeader(1, 'gm'))),
-        h2: arrify(decoded.match(regs.markdownHeader(2, 'gm'))),
-        h3: arrify(decoded.match(regs.markdownHeader(3, 'gm'))),
-        h4: arrify(decoded.match(regs.markdownHeader(4, 'gm'))),
-        h5: arrify(decoded.match(regs.markdownHeader(5), 'gm'))
+        h1: h1,
+        h2: h2,
+        h3: h3,
+        h4: h4,
+        h5: h5,
+        headerSum: headerSum
       }
 
     };
