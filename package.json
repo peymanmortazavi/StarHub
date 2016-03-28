@@ -20,6 +20,7 @@
     "asyncawait": "^1.0.3",
     "duplichar": "^1.0.0",
     "express": "^4.13.4",
+    "file-extension": "^2.0.1",
     "freq": "^0.1.5",
     "got": "^6.2.0",
     "http": "0.0.0",
@@ -27,6 +28,7 @@
     "moment": "^2.12.0",
     "mongodb": "^2.1.7",
     "octonode": "^0.7.4",
+    "regs": "^0.2.0",
     "sleep": "^3.0.1",
     "socket.io": "^1.4.5"
   },
