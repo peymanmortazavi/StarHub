@@ -4,6 +4,7 @@ function prettyJSON(obj) {
 }
 
 // gaster('https://github.com/dawsonbotsford/swim', (resp) => {
-master('https://github.com/dawsonbotsford/inf', (resp) => {
+master('https://github.com/chalk/chalk', (resp) => {
+// master('https://github.com/dawsonbotsford/inf', (resp) => {
   prettyJSON(resp);
 });
