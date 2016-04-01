@@ -1,11 +1,7 @@
 'use strict';
-var freq = require('freq');
+var wordfreq = require("word-freq");
 
-const compareFunc = (a, b) => {
-  return b.count - a.count;
-}
 module.exports = function(source) {
-
-  return freq(source).sort(compareFunc);
-
+  // freq(text, noStopWords, shouldStem)
+  return wordfreq.freq(source,true,false);
 }
