@@ -31,7 +31,8 @@
     "octonode": "^0.7.4",
     "regs": "^0.2.0",
     "sleep": "^3.0.1",
-    "socket.io": "^1.4.5"
+    "socket.io": "^1.4.5",
+    "word-freq": "0.0.8"
   },
   "devDependencies": {}
 }
