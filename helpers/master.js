@@ -49,10 +49,20 @@ module.exports = function(url, cb) {
 
     let headerSum = h1.length + h2.length + h3.length + h4.length + h5.length;
     body.helpers = {
-      readmeIsMarkdown: isMarkdown,
-      linkArray: arrify(linkArray(decoded)),
-      imageArray: arrify(imageArray(decoded)),
-      wordFrequency: frequency(decoded),
+      // readmeIsMarkdown: isMarkdown,
+      // linkArray: arrify(linkArray(decoded)),
+      // imageArray: arrify(imageArray(decoded)),
+      // wordFrequency: frequency(decoded),
+      ownerInfo: {
+        owner: owner,
+        length: owner.length,
+        hasNumbers: /\d/gim.test(owner)
+      },
+      repoInfo: {
+        repo: repo,
+        length: repo.length,
+        hasNumbers: /\d/gim.test(repo)
+      },
       sectionCount: {
         h1: h1,
         h2: h2,
