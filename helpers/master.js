@@ -1,5 +1,5 @@
 'use strict';
-const clientId = process.env.GH_TOKEN;
+const clientId = require('../config.json').tokens.github;  // refactor this
 const github = require('octonode');
 const inf = require('inf');
 const base64 = require('js-base64').Base64;
