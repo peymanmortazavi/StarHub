@@ -2,7 +2,7 @@
 
 module.exports = function (source) {
 
-    var s = source.match(/([#])\1+/g)||[];
+    var s = source.match(/([#])\1*/g)||[];
     var obj = {
         "#" : 0,
         "##" : 0,
