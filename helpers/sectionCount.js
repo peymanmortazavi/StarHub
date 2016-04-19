@@ -2,7 +2,7 @@
 
 module.exports = function (source) {
     try{
-        var s = source.match(/([#])\1+/g)||[];
+        var s = source.match(/([#])\1*/g)||[];
         var obj = {
             "#" : 0,
             "##" : 0,
@@ -17,8 +17,7 @@ module.exports = function (source) {
             if(obj.hasOwnProperty(s[item])){
                 obj[s[item]]++;
             }
-        }
-        return obj;
-    } catch (error) {
-        return null;
-    }}
+            return obj;
+        }} catch (error) {
+            return null;
+        }}
