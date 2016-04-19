@@ -1,5 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://hackcave.dynu.com:27017/github';
+var correlation = require('./correlation');
 
 module.exports = function(arg1) {
     MongoClient.connect(url, function (err, db) {
@@ -14,16 +15,19 @@ module.exports = function(arg1) {
                 stargazers_count:1,
                 _id:0
             };
-
             var cursor = repoCollection.find({},findObj);
 
             var jsonObject = [];
-            console.log('[');
+
             cursor.each(function(err, doc){
-                console.log('{\"RepositorySize\": \"%d\", \"StarGazersCount\":\"%d\"},', doc.size, doc.stargazers_count);
-                jsonObject.push(doc);
+                // jsonObject.push(doc);
+                // console.log(doc)
+                if (doc === null) {
+                    correlation(jsonObject);
+                    db.close();
+                }
             });
-            console.log(']');
         }
+
     });
 }
