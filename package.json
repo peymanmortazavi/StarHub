@@ -19,6 +19,7 @@
   "dependencies": {
     "arrify": "^1.0.1",
     "asyncawait": "^1.0.3",
+    "bluebird": "^3.3.5",
     "duplichar": "^1.0.0",
     "express": "^4.13.4",
     "file-extension": "^2.0.1",
