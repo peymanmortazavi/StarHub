@@ -46,10 +46,7 @@ module.exports = function(url, cb) {
 
     try {
         const decoded = base64.decode(body.content);
-        // console.log(inf(decoded));
-        body.decodedContent = decoded;
         delete body.content;
-        // console.log(inf(body.decodedContent));
         let myExtension = fileExtension(body.name).trim();
         let markdownReg = /markdown|mdown|mkdn|mkd|md/gi;
         const isMarkdown = markdownReg.test(myExtension);
@@ -62,10 +59,10 @@ module.exports = function(url, cb) {
 
         let headerSum = h1.length + h2.length + h3.length + h4.length + h5.length;
         body.helpers = {
-            // readmeIsMarkdown: isMarkdown,
-            // linkArray: arrify(linkArray(decoded)),
-            // imageArray: arrify(imageArray(decoded)),
-            // wordFrequency: frequency(decoded),
+            readmeIsMarkdown: isMarkdown,
+            linkArray: arrify(linkArray(decoded)),
+            imageArray: arrify(imageArray(decoded)),
+            wordFrequency: frequency(decoded),
             ownerInfo: {
                            owner: owner,
                            length: owner.length,
