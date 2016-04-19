@@ -2,103 +2,75 @@ var master = require('./helpers/master.js');
 var MongoClient = require('mongodb').MongoClient;
 var moment = require('moment');
 var sleep = require('sleep');
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
+var Promise = require('bluebird');
+var masterAsync = Promise.promisify(master);
 
 var currentStat = {total: 0, processed: 0, errors: 0, _c: 0};
 var errors = []
 
 var addError = function (repo, error) {
     repo = repo || {id: "unknown", html_url: "unknown"};
-    errors.push({id: repo.id, repo_url: repo.html_url, error, error});
+    errors.push({id: repo.id, repo_url: repo.html_url, error: error});
     console.error(error);
     currentStat.errors += 1;
 }
 
-var processRepository = function (cursor, db) {
-    cursor.hasNext( (err, r) => {
-        if (!r) {
-            console.log(r)
-            console.log(err)
-            console.log('DONE')
-            console.log(JSON.stringify(currentStat, null, 2));
-            process.exit()
-        }
-        currentStat._c += 1;
+var processCursor = (cursor, db, cb) => {
 
-        cursor.nextObject(function(err, repoInfo) {
-            if (err != null) {
-                // keep track of the error and move on
-                currentStat.errors += 1;
-                processRepository(cursor, db);
-                console.error('could not get the next object in cursor');
-                console.error(err);
-                addError(null, err);
-                return;
-            }
-            // validate it
-            if(repoInfo.html_url == null || repoInfo.html_url === '') {
-                errors.push({id: repoInfo.id, repo_url: repoInfo.html_url, error: "there is no html url"});
-                currentStat.errors += 1;
-                console.error("no html url");
-                processRepository(cursor, db);
-                return;
-            }
-            console.log('Processing: ' + repoInfo.html_url);
+    cursor.toArray( async((err, data) => {
+        for (var i = 0; i < data.length; i++) {
+            var repo = data[i];
+            console.log("Processing repository: " + repo.html_url);
             try {
-                master(repoInfo.html_url, function(error, result) {
-
-                    if (error != null) {
-                        addError(repoInfo, error);
-                        processRepository(cursor, db);
-                        if (error.statusCode == 404) {
-                            console.log("[NOT FOUND] 404; HTTP")
-                    db.updateOne(
-                        {"id": repoInfo.id}, {$set: {processedData: {found: false}}},
-                        function (err, s) {
-                            processRepository(cursor, db);
-                        });
+                var result = await(masterAsync(repo.html_url));
+                db.updateOne(
+                    {"id": repo.id}, { $set: { processedData: result.body }}, 
+                    function(err, s) {
+                        if (err != null) {
+                            addError(repo, err);
+                        } else {
+                            currentStat.processed += 1;
+                            console.log('[OK] Successfully processed.');
                         }
-                        return;
                     }
-
-                    try {
-                        db.updateOne(
-                            {"id": repoInfo.id}, {$set: {processedData: result.body}}, 
-                            function(err, s) {
-                                if (err != null) {
-                                    addError(repoInfo, err);
-                                } else {
-                                    currentStat.processed += 1;
-                                    console.log('[OK] Successfully processed.');
-                                }
-                                var rateRemaining = parseInt(result.headers['x-ratelimit-remaining']);
-                                console.log('API Limit: ' + rateRemaining + "; " + (currentStat.processed + currentStat.errors) + "/" + currentStat.total);
-                                if (rateRemaining <= 2) {
-                                    console.log('Reached API Limit');
-                                    var timeToStart = parseFloat(result.headers['x-ratelimit-reset']); 
-                                    var now = moment(Date.now(), 'x').format('X');
-                                    var timeDelta = timeToStart - now + 2;
-                                    console.log("Sleeping for " + timeDelta);
-                                    sleep.sleep(timeDelta);
-                                }
-                                processRepository(cursor, db);
-                            }
-                        );
-                    } catch (ex) {
-                        addError(repoInfo, ex);
-                        processRepository(cursor, db);
-                    }
-                });
-            } catch (ex) {
-                addError(repoInfo, ex);
-                processRepository(cursor, db);
+                    );
+                processApiLimit(result.headers)
+            } catch (error) {
+                addError(repo, error);
+                if (error.statusCode == 404) {
+                    console.log("[NOT FOUND] 404");
+                    db.updateOne({"id": repo.id},
+                            {$set: {processedData: {found: false}}});
+                }
+                if (error.headers != null) {
+                    processApiLimit(error.headers);
+                }
             }
-        })
+        }
+        cb(null, null);
+    }));
+}
 
-    });
+function processApiLimit(headers) {
+    var rateRemaining = parseInt(headers['x-ratelimit-remaining']);
+    console.log('API Limit: ' + rateRemaining + "; " + (currentStat.processed + currentStat.errors) + "/" + currentStat.total);
+    if (rateRemaining <= 2) {
+        console.log('Reached API Limit');
+        var timeToStart = parseFloat(headers['x-ratelimit-reset']); 
+        var now = moment(Date.now(), 'x').format('X');
+        var timeDelta = timeToStart - now + 2;
+        console.log("Sleeping for " + timeDelta);
+        sleep.sleep(timeDelta);
+    } else {
+//        sleep.sleep(1);
+    }
 }
 
 var url = 'mongodb://localhost:27017/github';
-MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, async ((err, db) => {
+
     if (err) {
         console.error(err);
         return;
@@ -107,11 +79,29 @@ MongoClient.connect(url, function(err, db) {
 
     var repoCollection = db.collection('repositories');
     var processedCollection = db.collection('processed');
+    var threshold = 200;
 
-    var cursor = repoCollection.find({"processedData" : { $exists: false }}, {timeout: false}, {}).addCursorFlag('noCursorTimeout', true);
-    cursor.count(function(err, count) {
+    var processAsync = Promise.promisify(processCursor);
+
+    repoCollection.count({"processedData": { $exists: false }}, async( (err, count) => {
         currentStat.total = count;
-        console.log('TOTAL: ' + count);
-        processRepository(cursor, repoCollection);
-    });
-});
+        var remaining = count;
+        while(true) {
+            console.log(JSON.stringify(currentStat, null, 2));
+            console.log("Remaining: " + remaining);
+            if (remaining < threshold) {
+                threshold = remaining;
+            }
+            if (threshold == 0) {
+                console.log('DONE');
+                return;
+            }
+            var tempC = repoCollection.find({}, {timeout: false}, {limit: threshold}).addCursorFlag('noCursorTimeout', true);
+            await(processAsync(tempC, repoCollection));
+            console.log('Done with this iteration');
+            sleep.sleep(5);
+            remaining -= threshold;
+        }
+     }))
+
+}));
