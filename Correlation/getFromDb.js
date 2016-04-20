@@ -20,12 +20,11 @@ module.exports = function(arg1) {
             var jsonObject = [];
 
             cursor.each(function(err, doc){
-                // jsonObject.push(doc);
-                // console.log(doc)
                 if (doc === null) {
                     correlation(jsonObject);
                     db.close();
                 }
+                jsonObject.push(doc);
             });
         }
 
