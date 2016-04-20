@@ -22,25 +22,30 @@ const coVariance = function(arr1, arr2) {
   var subtractedArr2 = arr2.map(function(val) {
     return val - arr2Mean;
   });
+
   // console.log(subtractedArr1)
   // console.log(subtractedArr2)
 
-  var arr1Sum = subtractedArr1.reduce(function(pv, cv) { return pv + cv; }, 0);
-  var arr2Sum = subtractedArr2.reduce(function(pv, cv) { return pv + cv; }, 0);
+  // var arr1Sum = subtractedArr1.reduce(function(pv, cv) { return pv + cv; }, 0);
+  // var arr2Sum = subtractedArr2.reduce(function(pv, cv) { return pv + cv; }, 0);
 
-  //var multArr = []
-  //for (let i in arr1) {
-   // multArr.push(arr1Sum[i] * arr2Sum[i]);
-  //}
+  var multArr = []
+  for (var i = 0; i < arr1.length; i++) {
+   multArr.push(subtractedArr1[i] * subtractedArr2[i]);
+  }
+  console.log(multArr)
 
-  console.log(arr1Sum)
-  console.log(arr2Sum)
-  var covariance = (arr1Sum * arr2Sum) / (arr1.length - 1)
+  var arrSum = multArr.reduce(function(pv, cv) { return pv + cv; }, 0);
+  // console.log(arr1Sum)
+  // console.log(arr2Sum)
+  // var covariance = (arr1Sum * arr2Sum) / (arr1.length - 1)
+  var covariance = arrSum / (arr1.length - 1)
 
   return covariance;
 }
 
-console.log(coVariance([1,3,2,5,8,7,12,2,4], [8,6,9,4,3,3,2,7,7]))
+// console.log(coVariance([1,3,2,5,8,7,12,2,4], [8,6,9,4,3,3,2,7,7]))
+console.log(coVariance([65.21,64.75,65.26,65.76,65.96], [67.25,66.39,66.12,65.70,66.64]))
 
 module.exports = function(input) {
   var sizeArr = [];
