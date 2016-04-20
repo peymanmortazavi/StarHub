@@ -11,17 +11,18 @@ module.exports = function(arg1) {
         else {
             var repoCollection = db.collection('repositories');
             var findObj = {
-                size: 1,
                 stargazers_count:1,
                 _id:0
             };
+            findObj[arg1] = 1;
             var cursor = repoCollection.find({},findObj);
 
             var jsonObject = [];
 
             cursor.each(function(err, doc){
+                // console.log('doc: ' + JSON.stringify(doc))
                 if (doc === null) {
-                    correlation(jsonObject);
+                    correlation(arg1, jsonObject);
                     db.close();
                 }
                 jsonObject.push(doc);

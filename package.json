@@ -26,6 +26,7 @@
     "freq": "^0.1.5",
     "got": "^6.2.0",
     "http": "0.0.0",
+    "inf": "^0.1.0",
     "js-base64": "^2.1.9",
     "moment": "^2.12.0",
     "mongodb": "^2.1.7",
@@ -33,7 +34,9 @@
     "regs": "^0.2.0",
     "sleep": "^3.0.1",
     "socket.io": "^1.4.5",
-    "word-freq": "0.0.8"
+    "stats-lite": "^2.0.1",
+    "word-freq": "0.0.8",
+    "yagnus": "0.0.17"
   },
   "devDependencies": {
     "inf": "^0.1.0"

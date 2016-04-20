@@ -1,5 +1,15 @@
 # StarHub
 
+### Correlation commands to run
+```shell
+node Correlation/repoSize.js
+
+node Correlation/repoNameLength.js
+
+
+
+```
+
 ### Installation
 ```js
 npm install

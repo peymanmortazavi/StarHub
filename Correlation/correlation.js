@@ -17,7 +17,7 @@ const coVariance = function(arr1, arr2) {
   for (var i = 0; i < arr1.length; i++) {
    multArr.push(subtractedArr1[i] * subtractedArr2[i]);
   }
-  console.log(multArr)
+  // console.log(multArr)
 
   var arrSum = multArr.reduce(function(pv, cv) { return pv + cv; }, 0);
   var covariance = arrSum / (arr1.length - 1)
@@ -26,17 +26,14 @@ const coVariance = function(arr1, arr2) {
 }
 
 
-module.exports = function(input) {
+module.exports = function(attr, input) {
   var sizeArr = [];
   var starArr = [];
 
   for (let elem of input) {
-    sizeArr.push(elem.size);
+    sizeArr.push(elem[attr]);
     starArr.push(elem.stargazers_count);
   }
 
-  // console.log(stats.stdev(sizeArr));
-  // console.log(stats.stdev(starArr));
-
-  console.log('correlation: ' + (coVariance(sizeArr, starArr) / (stats.stdev(sizeArr) * stats.stdev(starArr))));
+  console.log('correlation between ' + attr + ' and stargazers_count: ' + (coVariance(sizeArr, starArr) / (stats.stdev(sizeArr) * stats.stdev(starArr))));
 }
