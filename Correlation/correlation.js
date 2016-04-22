@@ -32,7 +32,9 @@ module.exports = function(attr, input) {
 
   for (let elem of input) {
     sizeArr.push(elem[attr]);
+    // console.log('sizeArr appending: ' + elem[attr])
     starArr.push(elem.stargazers_count);
+    // console.log('starArr appending: ' + elem.stargazers_count)
   }
 
   console.log('correlation between ' + attr + ' and stargazers_count: ' + (coVariance(sizeArr, starArr) / (stats.stdev(sizeArr) * stats.stdev(starArr))));

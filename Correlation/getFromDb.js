@@ -26,6 +26,7 @@ module.exports = function(arg1) {
                     db.close();
                 }
                 jsonObject.push(doc);
+                    console.log(doc)
             });
         }
 
