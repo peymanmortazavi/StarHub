@@ -23,7 +23,7 @@ def encode_target(df, target_column):
 	return (df_mod, targets)
 	
 def visualize_tree(tree, feature_names):
-	with open("dt.dot", 'w') as f:
+	with open("GitHub.dot", 'w') as f:
 		f = export_graphviz(tree, out_file=f, feature_names = feature_names, filled = True) 
 	
 	command = ["dot", "-Tpng", "GitHub.dot", "-o", "GitHub.png"]
