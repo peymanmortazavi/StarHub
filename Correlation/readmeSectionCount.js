@@ -47,7 +47,7 @@ MongoClient.connect(url, function (err, db) {
                 jsonObject.push(toPush);
             } else {
                 // console.log(doc.processedData.helpers.readmeIsMarkdown)
-                console.log(count + '\n');
+                // console.log(count + '\n');
 
             }
           } catch (err) {
