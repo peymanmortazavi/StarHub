@@ -1,7 +1,7 @@
 'use strict'
 var MongoClient = require('mongodb').MongoClient;
 var url = 'mongodb://hackcave.dynu.com:27017/github';
-var correlation = require('./correlation.js');
+var correlation = require('./correlation2.js');
 const _ = require('lodash');
 
 const f1  = 'stargazers_count';
