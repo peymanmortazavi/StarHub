@@ -23,13 +23,15 @@ const coVariance = function(arr1, arr2) {
   var arrSum = multArr.reduce(function(pv, cv) { return pv + cv; }, 0);
   var covariance = arrSum / (arr1.length - 1)
 
-  console.log('returning covariance of: ' + covariance)
+  // console.log('returning covariance of: ' + covariance)
   return covariance;
 }
 
 
 module.exports = function(array1, array2) {
-  console.log('stdev of array1: ' + stats.stdev(array1))
-  console.log('stdev of array2: ' + stats.stdev(array2))
+  // console.log('\n\nIn correlation! array1: ' + array1)
+  // console.log('In correlation! array2: ' + array2)
+  // console.log('stdev of array1: ' + stats.stdev(array1))
+  // console.log('stdev of array2: ' + stats.stdev(array2))
   return coVariance(array1, array2) / (stats.stdev(array1) * stats.stdev(array2));
 }
