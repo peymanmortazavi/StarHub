@@ -24,19 +24,24 @@ MongoClient.connect(url, function (err, db) {
         let stargazersArr = [];
         let ownerNameLength = [];
         let repoNameLength = [];
+        let imageCountLength = [];
+        let descriptionLength = [];
+        let readmeSectionCount = [];
 
         cursor.each(function(err, doc){
-            // if (doc === null) {
-            //     // console.log(sizeArr)
-            //     // console.log(stargazersArr)
-            //     console.log('correlation between size and stargazers is: ' + correlation(sizeArr, stargazersArr));
-            //     db.close();
-            // }
-            // sizeArr.push(_.get(doc, 'size'));
-            // stargazersArr.push(_.get(doc, 'stargazers_count'));
-            // ownerNameLength.push(_.get(doc, 'processedData.helpers.ownerInfo.length'));
+            if (doc === null) {
+                // console.log('correlation between size and stargazers is: ' + correlation(sizeArr, stargazersArr));
+                db.close();
+                process.exit(1)
+            }
+            sizeArr.push(_.get(doc, 'size'));
+            stargazersArr.push(_.get(doc, 'stargazers_count'));
+            ownerNameLength.push(_.get(doc, 'processedData.helpers.ownerInfo.length'));
             repoNameLength.push(_.get(doc, 'processedData.helpers.repoInfo.length'));
-            console.log(repoNameLength)
+            imageCountLength.push(_.get(doc, 'processedData.helpers.imageArray.length'));
+            descriptionLength.push(_.get(doc, 'description', '').length);
+            readmeSectionCount.push(_.get(doc, 'processedData.helpers.sectionCount.headerSum', 0));
+
         });
     }
 
