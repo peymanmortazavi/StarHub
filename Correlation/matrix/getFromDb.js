@@ -23,10 +23,10 @@ MongoClient.connect(url, function (err, db) {
     else {
         var repoCollection = db.collection('repositories');
         var cursor = repoCollection.find({}, {
-            limit: 10,
+            limit: 1000,
             size: 1,
             _id: 0,
-            stargazers_count: 1,
+            stargazers_count: 1
         });
 
         let masterArr = [
@@ -73,11 +73,11 @@ MongoClient.connect(url, function (err, db) {
             }
             stargazersArr.push(_.get(doc, 'stargazers_count'));
             sizeArr.push(_.get(doc, 'size'));
-            ownerNameLength.push(_.get(doc, 'processedData.helpers.ownerInfo.length'));
-            repoNameLength.push(_.get(doc, 'processedData.helpers.repoInfo.length'));
-            imageCountLength.push(_.get(doc, 'processedData.helpers.imageArray.length'));
+            ownerNameLength.push(_.get(doc, 'processedData.helpers.ownerInfo.length', 8.8388));
+            repoNameLength.push(_.get(doc, 'processedData.helpers.repoInfo.length', 13.1932));
+            imageCountLength.push(_.get(doc, 'processedData.helpers.imageArray.length', 2.0015));
             descriptionLength.push(_.get(doc, 'description', '').length);
-            readmeSectionCount.push(_.get(doc, 'processedData.helpers.sectionCount.headerSum', 0));
+            readmeSectionCount.push(_.get(doc, 'processedData.helpers.sectionCount.headerSum', 5.4142));
             // console.log('SECTION COUNT: ' + readmeSectionCount)
         });
     }
