@@ -4,7 +4,7 @@
   "description": "research",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/ava Correlation/matrix/test.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "dependencies": {
     "arrify": "^1.0.1",
     "asyncawait": "^1.0.3",
+    "ava": "^0.14.0",
     "bignumber.js": "^2.3.0",
     "bluebird": "^3.3.5",
     "duplichar": "^1.0.0",
