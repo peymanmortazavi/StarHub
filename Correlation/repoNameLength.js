@@ -21,10 +21,12 @@ MongoClient.connect(url, function (err, db) {
 
         var jsonObject = [];
 
+        var count = 0;
         cursor.each(function(err, doc){
           try {
             // console.log('doc: ' + JSON.stringify(doc.processedData.helpers.repoInfo.length))
             if (doc === null) {
+                console.log('count: ' + count)
                 correlation(arg1, jsonObject);
                 db.close();
             }
@@ -32,6 +34,7 @@ MongoClient.connect(url, function (err, db) {
             toPush.stargazers_count = doc.stargazers_count;
             toPush[arg1] = doc.processedData.helpers.repoInfo.length;
 
+            count += 1;
             jsonObject.push(toPush);
             // console.log(jsonObject)
           } catch (err) {

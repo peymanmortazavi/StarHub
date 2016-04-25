@@ -9,12 +9,18 @@ npm install
 
 ### Correlation results (covariance / stdev)
 
-* correlation between repo size and stargazers_count: 0.011688510188864406
-* correlation between ownerInfo.length and stargazers_count: -0.013177102797976655
-* correlation between repoInfo.length and stargazers_count: -0.026801009317331707
-* correlation between image count and stargazers_count: 0.07727884132110648
-* correlation between description length and stargazers_count: 0.005792431979289031
-* correlation between sectionCount and stargazers_count: 0.0791952217258178
+* correlation between repo size and stargazers_count:
+`0.011688510188864406`
+
+* correlation between owner username length and stargazers_count: `-0.013177102797976655`
+
+* correlation between repoInfo.length and stargazers_count: `-0.026801009317331707`
+
+* correlation between image count and stargazers_count: `0.07727884132110648`
+
+* correlation between description length and stargazers_count: `0.005792431979289031`
+
+* correlation between sectionCount and stargazers_count: `0.0791952217258178`
 
 <br>
 

@@ -39,6 +39,7 @@
     "yagnus": "0.0.17"
   },
   "devDependencies": {
-    "inf": "^0.1.0"
+    "inf": "^0.1.0",
+    "lodash": "^4.11.1"
   }
 }
