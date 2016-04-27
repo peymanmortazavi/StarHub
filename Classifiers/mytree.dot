@@ -1,0 +1,8 @@
+digraph Tree {
+node [shape=box] ;
+0 [label="starGazersCount <= 0.5\nmse = 0.2147\nsamples = 162809\nvalue = 0.3121"] ;
+1 [label="mse = 0.0\nsamples = 50812\nvalue = 1.0"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="mse = 0.0\nsamples = 111997\nvalue = 0.0"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+}

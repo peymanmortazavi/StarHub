@@ -3,13 +3,14 @@ import subprocess
 import pandas as pd
 from pymongo import MongoClient
 import numpy as np
-from sklearn.tree import DecisionTreeClassifier, export_graphviz
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, export_graphviz
+from sklearn.metrics import confusion_matrix, mean_squared_error
 from sklearn import cross_validation
 
 def get_github_data():
-	if os.path.exists("GithubData.csv"):
+	if os.path.exists("sample.csv"):
 		print("-- csv found locally")
-		df = pd.read_csv("GithubData.csv")
+		df = pd.read_csv("sample.csv")
 	else:
 		print("--couldn't read the .csv file")
 		
@@ -24,11 +25,10 @@ def encode_target(df, target_column):
 	return (df_mod, targets)
 	
 def visualize_tree(tree, feature_names, targets):
-	print "worked till here"
-	with open("Starhub.dot", 'w') as f:
-		f = export_graphviz(tree, out_file=f, feature_names = feature_names, class_names = ["1","0"]) 
+	with open("starhub.dot", 'w') as f:
+		f = export_graphviz(tree, out_file=f, feature_names = feature_names, class_names = ["1","0"], filled = "true")
 	
-	command = ["dot", "-Tpng", "Starhub.dot", "-o", "Starhub.png"]
+	command = ["dot", "-Tpng", "starhub.dot", "-o", "starhub.png"]
 	try:
 		subprocess.check_call(command)
 	except:
@@ -45,22 +45,22 @@ if __name__ == '__main__':
 	y = df["starGazersCount"]
 	X = df[features]
 	
-	#dt = DecisionTreeClassifier(min_samples_split=15000, random_state=99)
-	#dt.fit(X, y)
+	#starhub = DecisionTreeClassifier(min_samples_split=15000, random_state=99)
+	#starhub.fit(X, y)
 	
 	X_train, X_test, Y_train, Y_test = cross_validation.train_test_split(X, y, test_size=0.2)
 	
-	dt = DecisionTreeClassifier(min_samples_split=15000, random_state=99)
-	dt.fit(X, y)
-	print "\n -- Done normal training "
-	
-	scores = cross_validation.cross_val_score(dt, X, y, cv = 25)
-	print scores.mean()
+	starhub = DecisionTreeClassifier(max_depth=6, min_samples_split=15000)
+	starhub.fit(X, y)
 	
 	print "\n -- Random Split --"
-	dt1 = DecisionTreeClassifier().fit(X_train, Y_train)
-	print dt1.score(X_test, Y_test)
-	
-	print targets
+	starhub1 = DecisionTreeClassifier()
+	starhub1.fit(X_train, Y_train)
+	print starhub1.score(X_test, Y_test)
 
-	visualize_tree(dt, features, targets)
+	print "\n -- Cross validation "
+	
+	scores = cross_validation.cross_val_score(starhub, X, y, cv = 25)
+	print scores.mean()
+	
+	visualize_tree(starhub, features, targets)
