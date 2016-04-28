@@ -4,7 +4,7 @@
   "description": "research",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/ava Correlation/matrix/test.js"
+    "test": "./node_modules/.bin/ava Correlation/test.js"
   },
   "repository": {
     "type": "git",
